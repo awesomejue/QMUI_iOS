@@ -481,6 +481,7 @@ QMUISynthesizeBOOLProperty(qmui_shouldIgnoreUIKVCAccessProhibited, setQmui_shoul
 
 @implementation NSException (QMUI_KVC)
 
+#if DEBUG
 + (void)load {
     if (@available(iOS 13.0, *)) {
         static dispatch_once_t onceToken;
@@ -507,5 +508,6 @@ QMUISynthesizeBOOLProperty(qmui_shouldIgnoreUIKVCAccessProhibited, setQmui_shoul
         });
     }
 }
+#endif
 
 @end
