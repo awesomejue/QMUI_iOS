@@ -310,6 +310,7 @@ static char kAssociatedObjectKey_qmui_viewWillAppearNotifyDelegate;
     if (self.isViewControllerTransiting && animated) {
         QMUILogWarn(NSStringFromClass(self.class), @"%@, 上一次界面切换的动画尚未结束就试图进行新的 push 操作，为了避免产生 bug，将本次 push 改为非动画形式。\n%s, isViewControllerTransiting = %@, viewController = %@, self.viewControllers = %@", NSStringFromClass(self.class),  __func__, StringFromBOOL(self.isViewControllerTransiting), viewController, self.viewControllers);
         animated = NO;
+        return;
     }
     
     if (self.isViewLoaded) {
