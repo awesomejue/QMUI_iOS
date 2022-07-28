@@ -378,14 +378,14 @@ static NSUInteger const kTagForCenteredPlayButton = 1;
     // 图片 height 比选图框(viewport)的 height 小，这时应该把图片纵向摆放在选图框中间，且不允许上下移动
     if (CGRectGetHeight(viewport) > CGRectGetHeight(contentViewFrame)) {
         // 用 floor 而不是 flat，是因为 flat 本质上是向上取整，会导致 top + bottom 比实际的大，然后 scrollView 就认为可滚动了
-        contentInset.top = floor(CGRectGetMidY(viewport) - CGRectGetHeight(contentViewFrame) / 2.0);
-        contentInset.bottom = floor(CGRectGetHeight(self.bounds) - CGRectGetMidY(viewport) - CGRectGetHeight(contentViewFrame) / 2.0);
+        contentInset.top = CGRectGetMidY(viewport) - CGRectGetHeight(contentViewFrame) / 2.0;
+        contentInset.bottom = CGRectGetHeight(self.bounds) - CGRectGetMidY(viewport) - CGRectGetHeight(contentViewFrame) / 2.0;
     }
     
     // 图片 width 比选图框的 width 小，这时应该把图片横向摆放在选图框中间，且不允许左右移动
     if (CGRectGetWidth(viewport) > CGRectGetWidth(contentViewFrame)) {
-        contentInset.left = floor(CGRectGetMidX(viewport) - CGRectGetWidth(contentViewFrame) / 2.0);
-        contentInset.right = floor(CGRectGetWidth(self.bounds) - CGRectGetMidX(viewport) - CGRectGetWidth(contentViewFrame) / 2.0);
+        contentInset.left = CGRectGetMidX(viewport) - CGRectGetWidth(contentViewFrame) / 2.0;
+        contentInset.right = CGRectGetWidth(self.bounds) - CGRectGetMidX(viewport) - CGRectGetWidth(contentViewFrame) / 2.0;
     }
     
     self.scrollView.contentInset = contentInset;
