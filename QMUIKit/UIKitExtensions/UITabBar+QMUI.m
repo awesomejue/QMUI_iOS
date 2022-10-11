@@ -228,33 +228,33 @@ QMUISynthesizeBOOLProperty(qmuitb_hasSetEffectForegroundColor, setQmuitb_hasSetE
             });
             
             // 修复系统在 iOS 12 及以下，通过 [UITabBarItem setTitleTextAttributes:forState:] 设置的 selected 字体无法生效的 bug（selected 的颜色是可以生效的）
-            OverrideImplementation(tabBarButtonLabelClass, @selector(setSelected:), ^id(__unsafe_unretained Class originClass, SEL originCMD, IMP (^originalIMPProvider)(void)) {
-                return ^(UILabel *selfObject, BOOL selected) {
-                    
-                    // call super
-                    void (*originSelectorIMP)(id, SEL, BOOL);
-                    originSelectorIMP = (void (*)(id, SEL, BOOL))originalIMPProvider();
-                    originSelectorIMP(selfObject, originCMD, selected);
-                    
-                    UITabBarItem *item = tabBarItemOfLabelBlock(selfObject);
-                    if (!item) {
-                        return;
-                    }
-                    
-                    NSDictionary<NSAttributedStringKey,id> *normalAttributes = [item titleTextAttributesForState:UIControlStateNormal] ?: [UITabBarItem.qmui_appearanceConfigured titleTextAttributesForState:UIControlStateNormal];
-                    NSDictionary<NSAttributedStringKey,id> *selectedAttributes = [item titleTextAttributesForState:UIControlStateSelected] ?: [UITabBarItem.qmui_appearanceConfigured titleTextAttributesForState:UIControlStateSelected];
-                    if (normalAttributes[NSFontAttributeName] && selectedAttributes[NSFontAttributeName]) {
-                        if (selected) {
-                            selfObject.font = selectedAttributes[NSFontAttributeName];
-                        } else {
-                            selfObject.font = normalAttributes[NSFontAttributeName];
-                        }
-                        [selfObject sizeToFit];
-                        [selfObject.superview setNeedsLayout];
-                    }
-                };
-            });   
-        }
+//            OverrideImplementation(tabBarButtonLabelClass, @selector(setSelected:), ^id(__unsafe_unretained Class originClass, SEL originCMD, IMP (^originalIMPProvider)(void)) {
+//                return ^(UILabel *selfObject, BOOL selected) {
+//
+//                    // call super
+//                    void (*originSelectorIMP)(id, SEL, BOOL);
+//                    originSelectorIMP = (void (*)(id, SEL, BOOL))originalIMPProvider();
+//                    originSelectorIMP(selfObject, originCMD, selected);
+//
+//                    UITabBarItem *item = tabBarItemOfLabelBlock(selfObject);
+//                    if (!item) {
+//                        return;
+//                    }
+//
+//                    NSDictionary<NSAttributedStringKey,id> *normalAttributes = [item titleTextAttributesForState:UIControlStateNormal] ?: [UITabBarItem.qmui_appearanceConfigured titleTextAttributesForState:UIControlStateNormal];
+//                    NSDictionary<NSAttributedStringKey,id> *selectedAttributes = [item titleTextAttributesForState:UIControlStateSelected] ?: [UITabBarItem.qmui_appearanceConfigured titleTextAttributesForState:UIControlStateSelected];
+//                    if (normalAttributes[NSFontAttributeName] && selectedAttributes[NSFontAttributeName]) {
+//                        if (selected) {
+//                            selfObject.font = selectedAttributes[NSFontAttributeName];
+//                        } else {
+//                            selfObject.font = normalAttributes[NSFontAttributeName];
+//                        }
+//                        [selfObject sizeToFit];
+//                        [selfObject.superview setNeedsLayout];
+//                    }
+//                };
+//            });
+//        }
         
         if (@available(iOS 13.0, *)) {
             // iOS 13 下如果以 UITabBarAppearance 的方式将 UITabBarItem 的 font 大小设置为超过默认的 10，则会出现布局错误，文字被截断，所以这里做了个兼容，iOS 14.0 测试过已不存在该问题
