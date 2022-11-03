@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Hisense' do |ss|
     ss.source_files = 'QMUIKit/QMUIKit.h'
-    ss.dependency 'QMUIKit/QMUIMainFrame',
+    ss.dependency 'QMUIKit/QMUIMainFrame'
     ss.dependency 'QMUIKit/QMUIComponents/QMUIMultipleDelegates'
     ss.dependency 'QMUIKit/QMUIComponents/QMUIAlertController'
     ss.dependency 'QMUIKit/QMUIComponents/QMUIImagePreviewView'
