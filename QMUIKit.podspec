@@ -20,6 +20,26 @@ Pod::Spec.new do |s|
   s.preserve_paths   = 'QMUIConfigurationTemplate/*'
   s.source_files     = 'QMUIKit/QMUIKit.h'
 
+  s.subspec 'Hisense' do |ss|
+    ss.source_files = 'QMUIKit/QMUIKit.h'
+    ss.dependency 'QMUIKit/QMUIMainFrame',
+    ss.dependency 'QMUIKit/QMUIComponents/QMUIMultipleDelegates',
+    ss.dependency 'QMUIKit/QMUIComponents/QMUIAlertController',
+    ss.dependency 'QMUIKit/QMUIComponents/QMUIImagePreviewView',
+    ss.dependency 'QMUIKit/QMUIComponents/QMUIMarqueeLabel',
+    ss.dependency 'QMUIKit/QMUIComponents/QMUIModalPresentationViewController',
+    ss.dependency 'QMUIKit/QMUIComponents/QMUIPieProgressView',
+    ss.dependency 'QMUIKit/QMUIComponents/QMUIPopupContainerView',
+    ss.dependency 'QMUIKit/QMUIComponents/QMUITableViewCell',
+    ss.dependency 'QMUIKit/QMUIComponents/QMUITips',
+    ss.dependency 'QMUIKit/QMUIComponents/QMUIZoomImageView',
+    ss.dependency 'QMUIKit/QMUIComponents/QMUIImagePickerLibrary',
+    ss.dependency 'QMUIKit/QMUIComponents/NavigationBarTransition',
+    ss.dependency 'QMUIKit/QMUIComponents/QMUIFloatLayoutView',
+    ss.dependency 'QMUIKit/QMUIComponents/QMUIAnimation',
+    ss.dependency 'QMUIKit/QMUIComponents/QMUIPopupMenuView'
+  end
+
   s.subspec 'QMUICore' do |ss|
     ss.source_files = 'QMUIKit/QMUIKit.h', 'QMUIKit/QMUICore', 'QMUIKit/UIKitExtensions'
     ss.frameworks = 'CoreImage', 'ImageIO'
