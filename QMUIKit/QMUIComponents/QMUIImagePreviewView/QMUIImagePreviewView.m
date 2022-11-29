@@ -102,8 +102,11 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    
     BOOL isCollectionViewSizeChanged = !CGSizeEqualToSize(self.collectionView.bounds.size, self.bounds.size);
-    if (isCollectionViewSizeChanged) {
+    
+    if (isCollectionViewSizeChanged && self.collectionView.visibleCells.count > 0) {
+        
         self.isChangingCollectionViewBounds = YES;
         
         // 必须先 invalidateLayout，再更新 collectionView.frame，否则横竖屏旋转前后的图片不一致（因为 scrollViewDidScroll: 时 contentSize、contentOffset 那些是错的）
