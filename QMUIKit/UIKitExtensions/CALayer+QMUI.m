@@ -37,11 +37,11 @@ QMUISynthesizeCGFloatProperty(qmui_originCornerRadius, setQmui_originCornerRadiu
         // 由于其他方法需要通过调用 qmuilayer_setCornerRadius: 来执行 swizzle 前的实现，所以这里暂时用 ExchangeImplementations
         ExchangeImplementations([CALayer class], @selector(setCornerRadius:), @selector(qmuilayer_setCornerRadius:));
         
-        ExtendImplementationOfNonVoidMethodWithoutArguments([CALayer class], @selector(init), CALayer *, ^CALayer *(CALayer *selfObject, CALayer *originReturnValue) {
-            selfObject.qmui_speedBeforePause = selfObject.speed;
-            selfObject.qmui_maskedCorners = QMUILayerAllCorner;
-            return originReturnValue;
-        });
+//        ExtendImplementationOfNonVoidMethodWithoutArguments([CALayer class], @selector(init), CALayer *, ^CALayer *(CALayer *selfObject, CALayer *originReturnValue) {
+//            selfObject.qmui_speedBeforePause = selfObject.speed;
+//            selfObject.qmui_maskedCorners = QMUILayerAllCorner;
+//            return originReturnValue;
+//        });
         
         OverrideImplementation([CALayer class], @selector(setBounds:), ^id(__unsafe_unretained Class originClass, SEL originCMD, IMP (^originalIMPProvider)(void)) {
             return ^(CALayer *selfObject, CGRect bounds) {
