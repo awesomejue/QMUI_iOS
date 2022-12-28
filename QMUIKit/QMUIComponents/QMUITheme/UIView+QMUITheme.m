@@ -30,63 +30,63 @@
 
 QMUISynthesizeIdCopyProperty(qmui_themeDidChangeBlock, setQmui_themeDidChangeBlock)
 
-+ (void)load {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        
-        OverrideImplementation([UIView class], @selector(setHidden:), ^id(__unsafe_unretained Class originClass, SEL originCMD, IMP (^originalIMPProvider)(void)) {
-            return ^(UIView *selfObject, BOOL firstArgv) {
-                
-                BOOL valueChanged = selfObject.hidden != firstArgv;
-                
-                // call super
-                void (*originSelectorIMP)(id, SEL, BOOL);
-                originSelectorIMP = (void (*)(id, SEL, BOOL))originalIMPProvider();
-                originSelectorIMP(selfObject, originCMD, firstArgv);
-                
-                if (valueChanged) {
-                    // UIView.qmui_currentThemeIdentifier 只是为了实现判断当前的 theme 是否有发生变化，所以可以构造成一个 string，但怎么避免每次 hidden 切换时都要遍历所有的 subviews？
-                    [selfObject _qmui_themeDidChangeByManager:nil identifier:nil theme:nil shouldEnumeratorSubviews:YES];
-                }
-            };
-        });
-        
-        OverrideImplementation([UIView class], @selector(setAlpha:), ^id(__unsafe_unretained Class originClass, SEL originCMD, IMP (^originalIMPProvider)(void)) {
-            return ^(UIView *selfObject, CGFloat firstArgv) {
-                
-                BOOL willShow = selfObject.alpha <= 0 && firstArgv > 0.01;
-                
-                // call super
-                void (*originSelectorIMP)(id, SEL, CGFloat);
-                originSelectorIMP = (void (*)(id, SEL, CGFloat))originalIMPProvider();
-                originSelectorIMP(selfObject, originCMD, firstArgv);
-                
-                if (willShow) {
-                    // 只设置 identifier 就可以了，内部自然会去同步更新 theme
-                    [selfObject _qmui_themeDidChangeByManager:nil identifier:nil theme:nil shouldEnumeratorSubviews:YES];
-                }
-            };
-        });
-        
-        // 这几个 class 实现了自己的 didMoveToWindow 且没有调用 super，所以需要每个都替换一遍方法
-        NSArray<Class> *classes = @[UIView.class,
-                                    UICollectionView.class,
-                                    UITextField.class,
-                                    UISearchBar.class,
-                                    NSClassFromString(@"UITableViewLabel")];
-        if (NSClassFromString(@"WKWebView")) {
-            classes = [classes arrayByAddingObject:NSClassFromString(@"WKWebView")];
-        }
-        [classes enumerateObjectsUsingBlock:^(Class  _Nonnull class, NSUInteger idx, BOOL * _Nonnull stop) {
-            ExtendImplementationOfVoidMethodWithoutArguments(class, @selector(didMoveToWindow), ^(UIView *selfObject) {
-                // enumerateSubviews 为 NO 是因为当某个 view 的 didMoveToWindow 被触发时，它的每个 subview 的 didMoveToWindow 也都会被触发，所以不需要遍历 subview 了
-                if (selfObject.window) {
-                    [selfObject _qmui_themeDidChangeByManager:nil identifier:nil theme:nil shouldEnumeratorSubviews:NO];
-                }
-            });
-        }];
-    });
-}
+//+ (void)load {
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//
+//        OverrideImplementation([UIView class], @selector(setHidden:), ^id(__unsafe_unretained Class originClass, SEL originCMD, IMP (^originalIMPProvider)(void)) {
+//            return ^(UIView *selfObject, BOOL firstArgv) {
+//
+//                BOOL valueChanged = selfObject.hidden != firstArgv;
+//
+//                // call super
+//                void (*originSelectorIMP)(id, SEL, BOOL);
+//                originSelectorIMP = (void (*)(id, SEL, BOOL))originalIMPProvider();
+//                originSelectorIMP(selfObject, originCMD, firstArgv);
+//
+//                if (valueChanged) {
+//                    // UIView.qmui_currentThemeIdentifier 只是为了实现判断当前的 theme 是否有发生变化，所以可以构造成一个 string，但怎么避免每次 hidden 切换时都要遍历所有的 subviews？
+//                    [selfObject _qmui_themeDidChangeByManager:nil identifier:nil theme:nil shouldEnumeratorSubviews:YES];
+//                }
+//            };
+//        });
+//
+//        OverrideImplementation([UIView class], @selector(setAlpha:), ^id(__unsafe_unretained Class originClass, SEL originCMD, IMP (^originalIMPProvider)(void)) {
+//            return ^(UIView *selfObject, CGFloat firstArgv) {
+//
+//                BOOL willShow = selfObject.alpha <= 0 && firstArgv > 0.01;
+//
+//                // call super
+//                void (*originSelectorIMP)(id, SEL, CGFloat);
+//                originSelectorIMP = (void (*)(id, SEL, CGFloat))originalIMPProvider();
+//                originSelectorIMP(selfObject, originCMD, firstArgv);
+//
+//                if (willShow) {
+//                    // 只设置 identifier 就可以了，内部自然会去同步更新 theme
+//                    [selfObject _qmui_themeDidChangeByManager:nil identifier:nil theme:nil shouldEnumeratorSubviews:YES];
+//                }
+//            };
+//        });
+//
+//        // 这几个 class 实现了自己的 didMoveToWindow 且没有调用 super，所以需要每个都替换一遍方法
+//        NSArray<Class> *classes = @[UIView.class,
+//                                    UICollectionView.class,
+//                                    UITextField.class,
+//                                    UISearchBar.class,
+//                                    NSClassFromString(@"UITableViewLabel")];
+//        if (NSClassFromString(@"WKWebView")) {
+//            classes = [classes arrayByAddingObject:NSClassFromString(@"WKWebView")];
+//        }
+//        [classes enumerateObjectsUsingBlock:^(Class  _Nonnull class, NSUInteger idx, BOOL * _Nonnull stop) {
+//            ExtendImplementationOfVoidMethodWithoutArguments(class, @selector(didMoveToWindow), ^(UIView *selfObject) {
+//                // enumerateSubviews 为 NO 是因为当某个 view 的 didMoveToWindow 被触发时，它的每个 subview 的 didMoveToWindow 也都会被触发，所以不需要遍历 subview 了
+//                if (selfObject.window) {
+//                    [selfObject _qmui_themeDidChangeByManager:nil identifier:nil theme:nil shouldEnumeratorSubviews:NO];
+//                }
+//            });
+//        }];
+//    });
+//}
 
 - (void)qmui_registerThemeColorProperties:(NSArray<NSString *> *)getters {
     [getters enumerateObjectsUsingBlock:^(NSString * _Nonnull getterString, NSUInteger idx, BOOL * _Nonnull stop) {
