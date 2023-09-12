@@ -22,6 +22,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Hisense' do |ss|
     ss.source_files = 'QMUIKit/QMUIKit.h'
+    ss.dependency 'QMUIKit/QMUITheme'
     ss.dependency 'QMUIKit/QMUIMainFrame'
     ss.dependency 'QMUIKit/QMUIComponents/QMUIMultipleDelegates'
     ss.dependency 'QMUIKit/QMUIComponents/QMUIAlertController'
@@ -315,25 +316,25 @@ Pod::Spec.new do |s|
       sss.dependency 'QMUIKit/QMUIComponents/QMUIMultipleDelegates'
     end
 
-    #ss.subspec 'QMUITheme' do |sss|
-      #sss.source_files = 'QMUIKit/QMUIComponents/QMUITheme/*.{h,m}'
-      #sss.dependency 'QMUIKit/QMUIComponents/QMUIImagePickerLibrary'
-      #sss.dependency 'QMUIKit/QMUIComponents/QMUIAlertController'
-      #sss.dependency 'QMUIKit/QMUIComponents/QMUIButton'
-      #sss.dependency 'QMUIKit/QMUIComponents/QMUIConsole'
-      #sss.dependency 'QMUIKit/QMUIComponents/QMUIEmotionView'
-      #sss.dependency 'QMUIKit/QMUIComponents/QMUIEmptyView'
-      #sss.dependency 'QMUIKit/QMUIComponents/QMUIGridView'
-      #sss.dependency 'QMUIKit/QMUIComponents/QMUIImagePreviewView'
-      #sss.dependency 'QMUIKit/QMUIComponents/QMUILabel'
-      #sss.dependency 'QMUIKit/QMUIComponents/QMUIPopupContainerView'
-      #sss.dependency 'QMUIKit/QMUIComponents/QMUIPopupMenuView'
-      #sss.dependency 'QMUIKit/QMUIComponents/QMUITextField'
-      #sss.dependency 'QMUIKit/QMUIComponents/QMUITextView'
-      #sss.dependency 'QMUIKit/QMUIComponents/QMUIToastView'
-      #sss.dependency 'QMUIKit/QMUIComponents/QMUIModalPresentationViewController'
-      #sss.dependency 'QMUIKit/QMUIComponents/QMUIBadge'
-    #end
+    ss.subspec 'QMUITheme' do |sss|
+      sss.source_files = 'QMUIKit/QMUIComponents/QMUITheme/*.{h,m}'
+      sss.dependency 'QMUIKit/QMUIComponents/QMUIImagePickerLibrary'
+      sss.dependency 'QMUIKit/QMUIComponents/QMUIAlertController'
+      sss.dependency 'QMUIKit/QMUIComponents/QMUIButton'
+      sss.dependency 'QMUIKit/QMUIComponents/QMUIConsole'
+      sss.dependency 'QMUIKit/QMUIComponents/QMUIEmotionView'
+      sss.dependency 'QMUIKit/QMUIComponents/QMUIEmptyView'
+      sss.dependency 'QMUIKit/QMUIComponents/QMUIGridView'
+      sss.dependency 'QMUIKit/QMUIComponents/QMUIImagePreviewView'
+      sss.dependency 'QMUIKit/QMUIComponents/QMUILabel'
+      sss.dependency 'QMUIKit/QMUIComponents/QMUIPopupContainerView'
+      sss.dependency 'QMUIKit/QMUIComponents/QMUIPopupMenuView'
+      sss.dependency 'QMUIKit/QMUIComponents/QMUITextField'
+      sss.dependency 'QMUIKit/QMUIComponents/QMUITextView'
+      sss.dependency 'QMUIKit/QMUIComponents/QMUIToastView'
+      sss.dependency 'QMUIKit/QMUIComponents/QMUIModalPresentationViewController'
+      sss.dependency 'QMUIKit/QMUIComponents/QMUIBadge'
+    end
 
     ss.subspec 'QMUITips' do |sss|
       sss.source_files = 'QMUIKit/QMUIComponents/QMUITips.{h,m}'
